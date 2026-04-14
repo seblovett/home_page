@@ -1,23 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Home</title>
   <style>
     /* ─── Reset & Base ─── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     :root {
-      --bg:        #0f1117;
-      --surface:   #1a1d27;
-      --surface2:  #22263a;
-      --border:    #2c3050;
-      --accent:    #6c63ff;
-      --accent2:   #a78bfa;
-      --text:      #e2e8f0;
-      --muted:     #6b7280;
-      --radius:    12px;
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --surface2: #22263a;
+      --border: #2c3050;
+      --accent: #6c63ff;
+      --accent2: #a78bfa;
+      --text: #e2e8f0;
+      --muted: #6b7280;
+      --radius: 12px;
       --sidebar-w: 220px;
     }
 
@@ -37,7 +44,9 @@
       display: flex;
       flex-direction: column;
       position: fixed;
-      top: 0; left: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      bottom: 0;
       overflow-y: auto;
       z-index: 10;
     }
@@ -53,7 +62,9 @@
       gap: 10px;
     }
 
-    .logo svg { flex-shrink: 0; }
+    .logo svg {
+      flex-shrink: 0;
+    }
 
     .search-wrap {
       padding: 0 14px 16px;
@@ -71,10 +82,18 @@
       transition: border-color .2s;
     }
 
-    .search-wrap input:focus { border-color: var(--accent); }
-    .search-wrap input::placeholder { color: var(--muted); }
+    .search-wrap input:focus {
+      border-color: var(--accent);
+    }
 
-    nav { flex: 1; padding: 4px 10px; }
+    .search-wrap input::placeholder {
+      color: var(--muted);
+    }
+
+    nav {
+      flex: 1;
+      padding: 4px 10px;
+    }
 
     nav a {
       display: flex;
@@ -90,12 +109,15 @@
       cursor: pointer;
     }
 
-    nav a:hover, nav a.active {
+    nav a:hover,
+    nav a.active {
       background: var(--surface2);
       color: var(--text);
     }
 
-    nav a.active { color: var(--accent2); }
+    nav a.active {
+      color: var(--accent2);
+    }
 
     nav .section-label {
       font-size: 0.68rem;
@@ -207,7 +229,9 @@
       line-height: 1;
     }
 
-    .card-body { min-width: 0; }
+    .card-body {
+      min-width: 0;
+    }
 
     .card-title {
       font-size: 0.875rem;
@@ -227,8 +251,13 @@
     }
 
     /* ─── Hidden sections ─── */
-    .section { display: block; }
-    .section.hidden { display: none; }
+    .section {
+      display: block;
+    }
+
+    .section.hidden {
+      display: none;
+    }
 
     /* ─── Clock ─── */
     .clock {
@@ -238,255 +267,404 @@
     }
 
     /* ─── Scrollbar ─── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
 
     /* ─── Responsive ─── */
     @media (max-width: 700px) {
-      aside { display: none; }
-      main { margin-left: 0; padding: 20px; }
+      aside {
+        display: none;
+      }
+
+      main {
+        margin-left: 0;
+        padding: 20px;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<!-- ═══ SIDEBAR ═══ -->
-<aside>
-  <div class="logo">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-      <line x1="2" y1="12" x2="22" y2="12"/>
-    </svg>
-    Home
-  </div>
-
-  <div class="search-wrap">
-    <input type="text" id="searchBox" placeholder="Filter links…" oninput="filterCards(this.value)" />
-  </div>
-
-  <nav>
-    <div class="section-label">Categories</div>
-    <a class="active" onclick="showSection('all', this)">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-      All
-    </a>
-    <a onclick="showSection('work', this)">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
-      Work
-    </a>
-    <a onclick="showSection('news', this)">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>
-      News
-    </a>
-    <a onclick="showSection('tools', this)">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-      Tools
-    </a>
-    <a onclick="showSection('entertainment', this)">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
-      Entertainment
-    </a>
-    <a onclick="showSection('engineering', this)">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-      Engineering
-    </a>
-    <a onclick="showSection('personal', this)">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      Personal
-    </a>
-  </nav>
-</aside>
-
-<!-- ═══ MAIN ═══ -->
-<main>
-  <div class="topbar">
-    <h1 id="sectionTitle">All Links</h1>
-    <span class="clock" id="clock"></span>
-  </div>
-
-  <!-- ── WORK ── -->
-  <div class="section" data-cat="work">
-    <div class="section-header">
-      <h2>Work</h2>
-      <span class="pill">5</span>
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside>
+    <div class="logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+        <line x1="2" y1="12" x2="22" y2="12" />
+      </svg>
+      Home
     </div>
-    <div class="grid">
-      <a class="card" href="https://gmail.com" target="_blank">
-        <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=gmail.com" alt="" onerror="this.parentNode.innerHTML='<span class=emoji>📧</span>'"/></div>
-        <div class="card-body"><div class="card-title">Gmail</div><div class="card-desc">Email</div></div>
-      </a>
-      <a class="card" href="https://mail.seblovett.co.uk" target="_blank">
-        <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=mail.seblovett.co.uk" alt="" onerror="this.parentNode.innerHTML='<span class=emoji>📬</span>'"/></div>
-        <div class="card-body"><div class="card-title">Fastmail</div><div class="card-desc">mail.seblovett.co.uk</div></div>
-      </a>
-      <a class="card" href="https://calendar.google.com" target="_blank">
-        <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=calendar.google.com" alt="" onerror="this.parentNode.innerHTML='<span class=emoji>📅</span>'"/></div>
-        <div class="card-body"><div class="card-title">Google Calendar</div><div class="card-desc">Schedule</div></div>
-      </a>
-      <a class="card" href="https://notion.so" target="_blank">
-        <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=notion.so" alt="" onerror="this.parentNode.innerHTML='<span class=emoji>📝</span>'"/></div>
-        <div class="card-body"><div class="card-title">Notion</div><div class="card-desc">Notes & docs</div></div>
-      </a>
-      <a class="card" href="https://github.com/seblovett" target="_blank">
-        <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=github.com" alt="" onerror="this.parentNode.innerHTML='<span class=emoji>💻</span>'"/></div>
-        <div class="card-body"><div class="card-title">GitHub</div><div class="card-desc">seblovett</div></div>
-      </a>
+
+    <div class="search-wrap">
+      <input type="text" id="searchBox" placeholder="Filter links…" oninput="filterCards(this.value)" />
     </div>
-  </div>
 
-  <!-- ── NEWS ── -->
-  <div class="section" data-cat="news">
-    <div class="section-header">
-      <h2>News</h2>
-      <span class="pill">4</span>
+    <nav>
+      <div class="section-label">Categories</div>
+      <a class="active" onclick="showSection('all', this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" />
+          <rect x="14" y="3" width="7" height="7" />
+          <rect x="14" y="14" width="7" height="7" />
+          <rect x="3" y="14" width="7" height="7" />
+        </svg>
+        All
+      </a>
+      <a onclick="showSection('work', this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="7" width="20" height="14" rx="2" />
+          <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+        </svg>
+        Work
+      </a>
+      <a onclick="showSection('news', this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path
+            d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2" />
+          <path d="M18 14h-8" />
+          <path d="M15 18h-5" />
+          <path d="M10 6h8v4h-8V6Z" />
+        </svg>
+        News
+      </a>
+      <a onclick="showSection('tools', this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path
+            d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+        </svg>
+        Tools
+      </a>
+      <a onclick="showSection('entertainment', this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="23 7 16 12 23 17 23 7" />
+          <rect x="1" y="5" width="15" height="14" rx="2" />
+        </svg>
+        Entertainment
+      </a>
+      <a onclick="showSection('engineering', this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+        </svg>
+        Engineering
+      </a>
+      <a onclick="showSection('personal', this)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        Personal
+      </a>
+    </nav>
+  </aside>
+
+  <!-- ═══ MAIN ═══ -->
+  <main>
+    <div class="topbar">
+      <h1 id="sectionTitle">All Links</h1>
+      <span class="clock" id="clock"></span>
     </div>
-    <div class="grid">
-      <a class="card" href="https://www.bbc.com/news" target="_blank">
-        <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=bbc.com" alt="" onerror="this.parentNode.innerHTML='<span class=emoji>📰</span>'"/></div>
-        <div class="card-body"><div class="card-title">BBC News</div><div class="card-desc">World news</div></div>
-      </a>
-      <a class="card" href="https://news.ycombinator.com" target="_blank">
-        <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=news.ycombinator.com" alt="" onerror="this.parentNode.innerHTML='<span class=emoji>🔶</span>'"/></div>
-        <div class="card-body"><div class="card-title">Hacker News</div><div class="card-desc">Tech & startups</div></div>
-      </a>
-      <a class="card" href="https://techcrunch.com" target="_blank">
-        <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=techcrunch.com" alt="" onerror="this.parentNode.innerHTML='<span class=emoji>⚡</span>'"/></div>
-        <div class="card-body"><div class="card-title">TechCrunch</div><div class="card-desc">Tech news</div></div>
-      </a>
-      <a class="card" href="https://arstechnica.com" target="_blank">
-        <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=arstechnica.com" alt="" onerror="this.parentNode.innerHTML='<span class=emoji>📡</span>'"/></div>
-        <div class="card-body"><div class="card-title">Ars Technica</div><div class="card-desc">Tech & science</div></div>
-      </a>
+
+    <!-- ── WORK ── -->
+    <div class="section" data-cat="work">
+      <div class="section-header">
+        <h2>Work</h2>
+        <span class="pill">5</span>
+      </div>
+      <div class="grid">
+        <a class="card" href="https://gmail.com" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=gmail.com" alt=""
+              onerror="this.parentNode.innerHTML='<span class=emoji>📧</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">Gmail</div>
+            <div class="card-desc">Email</div>
+          </div>
+        </a>
+        <a class="card" href="https://mail.seblovett.co.uk" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=mail.seblovett.co.uk" alt=""
+              onerror="this.parentNode.innerHTML='<span class=emoji>📬</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">Fastmail</div>
+            <div class="card-desc">mail.seblovett.co.uk</div>
+          </div>
+        </a>
+        <a class="card" href="https://calendar.google.com" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=calendar.google.com" alt=""
+              onerror="this.parentNode.innerHTML='<span class=emoji>📅</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">Google Calendar</div>
+            <div class="card-desc">Schedule</div>
+          </div>
+        </a>
+        <a class="card" href="https://notion.so" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=notion.so" alt=""
+              onerror="this.parentNode.innerHTML='<span class=emoji>📝</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">Notion</div>
+            <div class="card-desc">Notes & docs</div>
+          </div>
+        </a>
+        <a class="card" href="https://www.notion.so/34015eeef52b80a9929ff1b0df3ed255?v=34015eeef52b80e3a8db000cd72dd44c"
+          target="_blank">
+          <div class="card-icon">✅</div>
+          <div class="card-body">
+            <div class="card-title">Notion</div>
+            <div class="card-desc">To Do</div>
+          </div>
+        </a>
+        <a class="card" href="https://github.com/seblovett" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=github.com" alt=""
+              onerror="this.parentNode.innerHTML='<span class=emoji>💻</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">GitHub</div>
+            <div class="card-desc">seblovett</div>
+          </div>
+        </a>
+      </div>
     </div>
-  </div>
 
-  <!-- ── TOOLS ── -->
-  <div class="section" data-cat="tools">
-    <div class="section-header">
-      <h2>Tools</h2>
-      <span class="pill">2</span>
+    <!-- ── NEWS ── -->
+    <div class="section" data-cat="news">
+      <div class="section-header">
+        <h2>News</h2>
+        <span class="pill">4</span>
+      </div>
+      <div class="grid">
+        <a class="card" href="https://www.bbc.co.uk/news" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=bbc.com/news" alt=""
+              onerror="this.parentNode.innerHTML='<span class=emoji>📰</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">BBC News</div>
+            <div class="card-desc">World news</div>
+          </div>
+        </a>
+        <a class="card" href="https://www.bbc.co.uk/sport" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=bbc.com/sport" alt=""
+              onerror="this.parentNode.innerHTML='<span class=emoji>📰</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">BBC Sport</div>
+            <div class="card-desc">Sport</div>
+          </div>
+        </a>
+        <a class="card" href="https://www.bbc.co.uk/weather" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=bbc.com/weather" alt=""
+              onerror="this.parentNode.innerHTML='<span class=emoji>📰</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">BBC Weather</div>
+            <div class="card-desc">Weather</div>
+          </div>
+        </a>
+      </div>
     </div>
-    <div class="grid">
-      <a class="card" href="https://claude.ai" target="_blank">
-        <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=claude.ai" alt="" onerror="this.parentNode.innerHTML='<span class=emoji>🤖</span>'"/></div>
-        <div class="card-body"><div class="card-title">Claude</div><div class="card-desc">AI assistant</div></div>
-      </a>
-      <a class="card" href="https://chatgpt.com" target="_blank">
-        <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=chatgpt.com" alt="" onerror="this.parentNode.innerHTML='<span class=emoji>💬</span>'"/></div>
-        <div class="card-body"><div class="card-title">ChatGPT</div><div class="card-desc">AI assistant</div></div>
-      </a>
+
+    <!-- ── ENTERTAINMENT ── -->
+    <div class="section" data-cat="entertainment">
+      <div class="section-header">
+        <h2>Entertainment</h2>
+        <span class="pill">2</span>
+      </div>
+      <div class="grid">
+        <a class="card" href="https://youtube.com" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=youtube.com" alt=""
+              onerror="this.parentNode.innerHTML='<span class=emoji>▶️</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">YouTube</div>
+            <div class="card-desc">Videos</div>
+          </div>
+        </a>
+        <a class="card" href="https://netflix.com" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=netflix.com" alt=""
+              onerror="this.parentNode.innerHTML='<span class=emoji>🎬</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">Netflix</div>
+            <div class="card-desc">Shows & films</div>
+          </div>
+        </a>
+      </div>
     </div>
-  </div>
 
-  <!-- ── ENTERTAINMENT ── -->
-  <div class="section" data-cat="entertainment">
-    <div class="section-header">
-      <h2>Entertainment</h2>
-      <span class="pill">2</span>
+    <!-- ── TOOLS ── -->
+    <div class="section" data-cat="tools">
+      <div class="section-header">
+        <h2>Tools</h2>
+        <span class="pill">2</span>
+      </div>
+      <div class="grid">
+        <a class="card" href="https://quickref.me/" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=quickref.me" alt=""
+              onerror="this.parentNode.innerHTML='<span class=emoji>🤖</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">QuickRef</div>
+            <div class="card-desc">Quick references</div>
+          </div>
+        </a>
+        <a class="card" href="https://gchq.github.io/CyberChef/" target="_blank">
+          <div class="card-icon"><img
+              src="https://www.google.com/s2/favicons?sz=32&domain=https://gchq.github.io/CyberChef/" alt=""
+              onerror="this.parentNode.innerHTML='<span class=emoji>🤖</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">CyberChef</div>
+            <div class="card-desc">Cyber tools</div>
+          </div>
+        </a>
+        <a class="card" href="https://app.diagrams.net/" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=https://app.diagrams.net/"
+              alt="" onerror="this.parentNode.innerHTML='<span class=emoji>🤖</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">Draw.IO</div>
+            <div class="card-desc">Diagram Drawing Tool</div>
+          </div>
+        </a>
+
+      </div>
     </div>
-    <div class="grid">
-      <a class="card" href="https://youtube.com" target="_blank">
-        <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=youtube.com" alt="" onerror="this.parentNode.innerHTML='<span class=emoji>▶️</span>'"/></div>
-        <div class="card-body"><div class="card-title">YouTube</div><div class="card-desc">Videos</div></div>
-      </a>
-      <a class="card" href="https://netflix.com" target="_blank">
-        <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=netflix.com" alt="" onerror="this.parentNode.innerHTML='<span class=emoji>🎬</span>'"/></div>
-        <div class="card-body"><div class="card-title">Netflix</div><div class="card-desc">Shows & films</div></div>
-      </a>
+
+    <!-- ── ENGINEERING ── -->
+    <div class="section" data-cat="engineering">
+      <div class="section-header">
+        <h2>Engineering</h2>
+        <span class="pill">3</span>
+      </div>
+      <div class="grid">
+        <a class="card" href="https://news.ycombinator.com" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=news.ycombinator.com" alt=""
+              onerror="this.parentNode.innerHTML='<span class=emoji>🔶</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">Hacker News</div>
+            <div class="card-desc">Tech & startups</div>
+          </div>
+        </a>
+        <a class="card" href="https://techcrunch.com" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=techcrunch.com" alt=""
+              onerror="this.parentNode.innerHTML='<span class=emoji>⚡</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">TechCrunch</div>
+            <div class="card-desc">Tech news</div>
+          </div>
+        </a>
+        <a class="card" href="https://arstechnica.com" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=arstechnica.com" alt=""
+              onerror="this.parentNode.innerHTML='<span class=emoji>📡</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">Ars Technica</div>
+            <div class="card-desc">Tech & science</div>
+          </div>
+        </a>
+        <a class="card" href="https://hackaday.com" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=hackaday.com" alt=""
+              onerror="this.parentNode.innerHTML='<span class=emoji>🔧</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">Hackaday</div>
+            <div class="card-desc">Hacks & projects</div>
+          </div>
+        </a>
+        <a class="card" href="https://www.cnx-software.com" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=cnx-software.com" alt=""
+              onerror="this.parentNode.innerHTML='<span class=emoji>🖥️</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">CNX Software</div>
+            <div class="card-desc">Embedded & SBCs</div>
+          </div>
+        </a>
+        <a class="card" href="https://www.electronicsworld.co.uk" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=electronicsworld.co.uk"
+              alt="" onerror="this.parentNode.innerHTML='<span class=emoji>⚡</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">Electronics World</div>
+            <div class="card-desc">Electronics mag</div>
+          </div>
+        </a>
+      </div>
     </div>
-  </div>
 
-  <!-- ── ENGINEERING ── -->
-  <div class="section" data-cat="engineering">
-    <div class="section-header">
-      <h2>Engineering</h2>
-      <span class="pill">3</span>
+    <!-- ── PERSONAL ── -->
+    <div class="section" data-cat="personal">
+      <div class="section-header">
+        <h2>Personal</h2>
+        <span class="pill">2</span>
+      </div>
+      <div class="grid">
+        <a class="card" href="https://food.seblovett.co.uk" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=food.seblovett.co.uk" alt=""
+              onerror="this.parentNode.innerHTML='<span class=emoji>🍽️</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">Food</div>
+            <div class="card-desc">seblovett.co.uk</div>
+          </div>
+        </a>
+        <a class="card" href="https://calculators.seblovett.co.uk" target="_blank">
+          <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=calculators.seblovett.co.uk"
+              alt="" onerror="this.parentNode.innerHTML='<span class=emoji>🧮</span>'" /></div>
+          <div class="card-body">
+            <div class="card-title">Calculators</div>
+            <div class="card-desc">seblovett.co.uk</div>
+          </div>
+        </a>
+      </div>
     </div>
-    <div class="grid">
-      <a class="card" href="https://hackaday.com" target="_blank">
-        <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=hackaday.com" alt="" onerror="this.parentNode.innerHTML='<span class=emoji>🔧</span>'"/></div>
-        <div class="card-body"><div class="card-title">Hackaday</div><div class="card-desc">Hacks & projects</div></div>
-      </a>
-      <a class="card" href="https://www.cnx-software.com" target="_blank">
-        <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=cnx-software.com" alt="" onerror="this.parentNode.innerHTML='<span class=emoji>🖥️</span>'"/></div>
-        <div class="card-body"><div class="card-title">CNX Software</div><div class="card-desc">Embedded & SBCs</div></div>
-      </a>
-      <a class="card" href="https://www.electronicsworld.co.uk" target="_blank">
-        <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=electronicsworld.co.uk" alt="" onerror="this.parentNode.innerHTML='<span class=emoji>⚡</span>'"/></div>
-        <div class="card-body"><div class="card-title">Electronics World</div><div class="card-desc">Electronics mag</div></div>
-      </a>
-    </div>
-  </div>
 
-  <!-- ── PERSONAL ── -->
-  <div class="section" data-cat="personal">
-    <div class="section-header">
-      <h2>Personal</h2>
-      <span class="pill">2</span>
-    </div>
-    <div class="grid">
-      <a class="card" href="https://food.seblovett.co.uk" target="_blank">
-        <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=food.seblovett.co.uk" alt="" onerror="this.parentNode.innerHTML='<span class=emoji>🍽️</span>'"/></div>
-        <div class="card-body"><div class="card-title">Food</div><div class="card-desc">seblovett.co.uk</div></div>
-      </a>
-      <a class="card" href="https://calculators.seblovett.co.uk" target="_blank">
-        <div class="card-icon"><img src="https://www.google.com/s2/favicons?sz=32&domain=calculators.seblovett.co.uk" alt="" onerror="this.parentNode.innerHTML='<span class=emoji>🧮</span>'"/></div>
-        <div class="card-body"><div class="card-title">Calculators</div><div class="card-desc">seblovett.co.uk</div></div>
-      </a>
-    </div>
-  </div>
+  </main>
 
-</main>
+  <script>
+    // ── Clock ──
+    function tick() {
+      const now = new Date();
+      document.getElementById('clock').textContent =
+        now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) +
+        '  ·  ' + now.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' });
+    }
+    tick(); setInterval(tick, 1000);
 
-<script>
-  // ── Clock ──
-  function tick() {
-    const now = new Date();
-    document.getElementById('clock').textContent =
-      now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) +
-      '  ·  ' + now.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' });
-  }
-  tick(); setInterval(tick, 1000);
+    // ── Category filter ──
+    function showSection(cat, el) {
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+      el.classList.add('active');
 
-  // ── Category filter ──
-  function showSection(cat, el) {
-    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-    el.classList.add('active');
+      const title = el.textContent.trim();
+      document.getElementById('sectionTitle').textContent = cat === 'all' ? 'All Links' : title;
 
-    const title = el.textContent.trim();
-    document.getElementById('sectionTitle').textContent = cat === 'all' ? 'All Links' : title;
+      document.querySelectorAll('.section').forEach(sec => {
+        if (cat === 'all' || sec.dataset.cat === cat) {
+          sec.classList.remove('hidden');
+        } else {
+          sec.classList.add('hidden');
+        }
+      });
 
-    document.querySelectorAll('.section').forEach(sec => {
-      if (cat === 'all' || sec.dataset.cat === cat) {
-        sec.classList.remove('hidden');
-      } else {
-        sec.classList.add('hidden');
-      }
-    });
+      // Clear search when switching category
+      document.getElementById('searchBox').value = '';
+      filterCards('');
+    }
 
-    // Clear search when switching category
-    document.getElementById('searchBox').value = '';
-    filterCards('');
-  }
-
-  // ── Search / filter ──
-  function filterCards(query) {
-    query = query.toLowerCase();
-    document.querySelectorAll('.card').forEach(card => {
-      const text = card.textContent.toLowerCase();
-      card.style.display = text.includes(query) ? '' : 'none';
-    });
-    // Show/hide sections based on visible cards
-    document.querySelectorAll('.section').forEach(sec => {
-      if (sec.classList.contains('hidden')) return;
-      const hasVisible = [...sec.querySelectorAll('.card')].some(c => c.style.display !== 'none');
-      sec.style.visibility = hasVisible ? '' : 'hidden';
-      sec.style.height = hasVisible ? '' : '0';
-      sec.style.marginBottom = hasVisible ? '' : '0';
-    });
-  }
-</script>
+    // ── Search / filter ──
+    function filterCards(query) {
+      query = query.toLowerCase();
+      document.querySelectorAll('.card').forEach(card => {
+        const text = card.textContent.toLowerCase();
+        card.style.display = text.includes(query) ? '' : 'none';
+      });
+      // Show/hide sections based on visible cards
+      document.querySelectorAll('.section').forEach(sec => {
+        if (sec.classList.contains('hidden')) return;
+        const hasVisible = [...sec.querySelectorAll('.card')].some(c => c.style.display !== 'none');
+        sec.style.visibility = hasVisible ? '' : 'hidden';
+        sec.style.height = hasVisible ? '' : '0';
+        sec.style.marginBottom = hasVisible ? '' : '0';
+      });
+    }
+  </script>
 
 </body>
+
 </html>
